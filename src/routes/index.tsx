@@ -1190,18 +1190,6 @@ function Index() {
                   <label className="flex items-center gap-1.5">
                     <input
                       type="checkbox"
-                      checked={!t.aidatSadece}
-                      onChange={(e) =>
-                        void talebeGuncelle(t.id, {
-                          aidatSadece: !e.target.checked,
-                        })
-                      }
-                    />
-                    Hafızlık listesinde
-                  </label>
-                  <label className="flex items-center gap-1.5">
-                    <input
-                      type="checkbox"
                       checked={!t.aidatHaric}
                       onChange={(e) =>
                         void talebeGuncelle(t.id, {

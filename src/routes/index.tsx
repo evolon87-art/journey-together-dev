@@ -1275,7 +1275,8 @@ function TalebeAvatar({
   return (
     <div
       style={stil}
-      className="inline-flex items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary ring-1 ring-primary/20"
+      className="inline-flex items-center justify-center rounded-full bg-primary/10 font-semibold text-primary ring-1 ring-primary/20"
+      style={{ ...stil, fontSize: Math.max(11, boyut / 3.2) }}
     >
       {bashHarfler(talebe.isim)}
     </div>

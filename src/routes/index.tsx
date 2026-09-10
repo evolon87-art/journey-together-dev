@@ -1705,7 +1705,16 @@ function DuzenleDiyalog({
 
   return (
     <Dialog open={!!talebe} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent
+        className="sm:max-w-md"
+        onOpenAutoFocus={(e) => {
+          if (sayfaOdakli) {
+            e.preventDefault();
+            sayfaInputRef.current?.focus();
+            sayfaInputRef.current?.select();
+          }
+        }}
+      >
         <DialogHeader>
           <DialogTitle>{t("talebeyiDuzenle")}</DialogTitle>
           <DialogDescription>

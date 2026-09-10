@@ -366,6 +366,7 @@ function Index() {
   const [profilGoster, setProfilGoster] = useState<Talebe | null>(null);
   const [profilAidattan, setProfilAidattan] = useState(false);
   const [duzenleAidattan, setDuzenleAidattan] = useState(false);
+  const [duzenleSayfaOdakli, setDuzenleSayfaOdakli] = useState(false);
   const [hocaDuzenle, setHocaDuzenle] = useState(false);
   const [hocaTaslak, setHocaTaslak] = useState(hoca);
   const [seciliHafta, setSeciliHafta] = useState<number>(() => haftaBaslastik());

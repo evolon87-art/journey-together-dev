@@ -1632,11 +1632,13 @@ function IlerlemeRozet({ sayfa }: { sayfa: number }) {
 function DuzenleDiyalog({
   talebe,
   kiraatGizli = false,
+  sayfaOdakli = false,
   onClose,
   onKaydet,
 }: {
   talebe: Talebe | null;
   kiraatGizli?: boolean;
+  sayfaOdakli?: boolean;
   onClose: () => void;
   onKaydet: (p: Partial<Talebe>) => void;
 }) {
@@ -1645,6 +1647,7 @@ function DuzenleDiyalog({
   const [yon, setYon] = useState<KiraatYonu>("alttan");
   const [sayfaTaslak, setSayfaTaslak] = useState("1");
   const [sayfaHata, setSayfaHata] = useState<string | null>(null);
+  const sayfaInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (talebe) {
@@ -1654,6 +1657,17 @@ function DuzenleDiyalog({
       setSayfaHata(null);
     }
   }, [talebe]);
+
+  useEffect(() => {
+    if (talebe && sayfaOdakli && sayfaInputRef.current) {
+      // Kalem ikonundan açıldığında sayfa alanına odaklan
+      const id = window.setTimeout(() => {
+        sayfaInputRef.current?.focus();
+        sayfaInputRef.current?.select();
+      }, 50);
+      return () => window.clearTimeout(id);
+    }
+  }, [talebe, sayfaOdakli]);
 
   const sayfaDogrula = (deger: string): number | null => {
     if (deger.trim() === "") {

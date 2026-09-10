@@ -366,6 +366,7 @@ function Index() {
   const [profilGoster, setProfilGoster] = useState<Talebe | null>(null);
   const [profilAidattan, setProfilAidattan] = useState(false);
   const [duzenleAidattan, setDuzenleAidattan] = useState(false);
+  const [duzenleSayfaOdakli, setDuzenleSayfaOdakli] = useState(false);
   const [hocaDuzenle, setHocaDuzenle] = useState(false);
   const [hocaTaslak, setHocaTaslak] = useState(hoca);
   const [seciliHafta, setSeciliHafta] = useState<number>(() => haftaBaslastik());
@@ -904,6 +905,7 @@ function Index() {
                             className="h-6 w-6 sm:h-8 sm:w-8"
                             onClick={() => {
                               setDuzenleAidattan(false);
+                              setDuzenleSayfaOdakli(true);
                               setDuzenlenen(t);
                             }}
                           >
@@ -1209,10 +1211,15 @@ function Index() {
       <DuzenleDiyalog
         talebe={duzenlenen}
         kiraatGizli={duzenleAidattan}
-        onClose={() => setDuzenlenen(null)}
+        sayfaOdakli={duzenleSayfaOdakli}
+        onClose={() => {
+          setDuzenlenen(null);
+          setDuzenleSayfaOdakli(false);
+        }}
         onKaydet={(p) => {
           if (duzenlenen) guncelle(duzenlenen.id, p);
           setDuzenlenen(null);
+          setDuzenleSayfaOdakli(false);
         }}
       />
 
@@ -1625,11 +1632,13 @@ function IlerlemeRozet({ sayfa }: { sayfa: number }) {
 function DuzenleDiyalog({
   talebe,
   kiraatGizli = false,
+  sayfaOdakli = false,
   onClose,
   onKaydet,
 }: {
   talebe: Talebe | null;
   kiraatGizli?: boolean;
+  sayfaOdakli?: boolean;
   onClose: () => void;
   onKaydet: (p: Partial<Talebe>) => void;
 }) {
@@ -1638,6 +1647,7 @@ function DuzenleDiyalog({
   const [yon, setYon] = useState<KiraatYonu>("alttan");
   const [sayfaTaslak, setSayfaTaslak] = useState("1");
   const [sayfaHata, setSayfaHata] = useState<string | null>(null);
+  const sayfaInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (talebe) {
@@ -1647,6 +1657,17 @@ function DuzenleDiyalog({
       setSayfaHata(null);
     }
   }, [talebe]);
+
+  useEffect(() => {
+    if (talebe && sayfaOdakli && sayfaInputRef.current) {
+      // Radix Dialog'un kendi odağını tamamlaması için kısa gecikme
+      const id = window.setTimeout(() => {
+        sayfaInputRef.current?.focus();
+        sayfaInputRef.current?.select();
+      }, 180);
+      return () => window.clearTimeout(id);
+    }
+  }, [talebe, sayfaOdakli]);
 
   const sayfaDogrula = (deger: string): number | null => {
     if (deger.trim() === "") {
@@ -1684,7 +1705,16 @@ function DuzenleDiyalog({
 
   return (
     <Dialog open={!!talebe} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent
+        className="sm:max-w-md"
+        onOpenAutoFocus={(e) => {
+          if (sayfaOdakli) {
+            e.preventDefault();
+            sayfaInputRef.current?.focus();
+            sayfaInputRef.current?.select();
+          }
+        }}
+      >
         <DialogHeader>
           <DialogTitle>{t("talebeyiDuzenle")}</DialogTitle>
           <DialogDescription>
@@ -1745,6 +1775,7 @@ function DuzenleDiyalog({
                 <BookOpen className="h-3.5 w-3.5" /> {t("sayfaAralik")}
               </Label>
               <Input
+                ref={sayfaInputRef}
                 type="number"
                 inputMode="numeric"
                 min={1}

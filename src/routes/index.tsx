@@ -315,7 +315,9 @@ const GUN_UZUN = [
 ] as const;
 
 function bugununGunu(): number {
-  return (new Date().getDay() + 6) % 7; // Pzt=0
+  const gun = (new Date().getDay() + 6) % 7; // Pzt=0
+  // Cumartesi (5) ve Pazar (6) ders günü değildir; Pazartesi'ye döndür.
+  return gun >= 5 ? 0 : gun;
 }
 
 function getKiraatGunler(t: Talebe, haftaBas: number): number[] {
@@ -835,11 +837,14 @@ function Index() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {tr("haftaGun").map((isim, i) => (
-                          <SelectItem key={i} value={String(i)} className="text-sm">
-                            {tr("ders")} · {isim}
-                          </SelectItem>
-                        ))}
+                        {tr("haftaGun")
+                          .map((isim, i) => ({ isim, i }))
+                          .filter(({ i }) => i < 5)
+                          .map(({ isim, i }) => (
+                            <SelectItem key={i} value={String(i)} className="text-sm">
+                              {tr("ders")} · {isim}
+                            </SelectItem>
+                          ))}
                       </SelectContent>
                     </Select>
                   </TableHead>
@@ -1533,6 +1538,7 @@ function KiraatGunler({
   return (
     <div className="flex flex-wrap justify-center gap-1">
       {GUN_KISA.map((isim, i) => {
+        if (i >= 5) return null;
         const aktif = gunler.includes(i);
         const sinif = aktif
           ? "bg-primary text-primary-foreground border-primary"

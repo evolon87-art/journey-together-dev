@@ -1537,7 +1537,7 @@ function KiraatGunler({
 }) {
   return (
     <div className="flex flex-wrap justify-center gap-1">
-      {GUN_KISA.map((isim, i) => {
+      {GUN_KISA.filter((_, i) => i < 5).map((isim, i) => {
         const aktif = gunler.includes(i);
         const sinif = aktif
           ? "bg-primary text-primary-foreground border-primary"

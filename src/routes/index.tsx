@@ -868,14 +868,8 @@ function Index() {
                       <button
                         type="button"
                         onClick={() => {
-                          if (hocaModu) {
-                            setDuzenleAidattan(false);
-                            setDuzenleSayfaOdakli(false);
-                            setDuzenlenen(t);
-                          } else {
-                            setProfilAidattan(false);
-                            setProfilGoster(t);
-                          }
+                          setProfilAidattan(false);
+                          setProfilGoster(t);
                         }}
                         className="group flex w-full min-w-0 items-center gap-1 text-left text-xs hover:text-primary sm:gap-2 sm:text-sm"
                       >
@@ -1459,7 +1453,7 @@ function ProfilDiyalog({
 
         <DialogFooter className="gap-2 sm:gap-2">
           <Button variant="ghost" onClick={onClose}>
-            {t("kapat")}
+            {t("iptal")}
           </Button>
           {hocaModu && (
             <>

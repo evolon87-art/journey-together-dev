@@ -1156,53 +1156,39 @@ function Index() {
         <DialogContent className="max-h-[80vh] overflow-y-auto sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>Gruplar oluştur</DialogTitle>
-            <DialogDescription>
-              Talebeleri gruplara atayın. Mesul hocalar: {GRUPLAR.map((g) => `${g.ad} — ${g.hoca}`).join(", ")}
-            </DialogDescription>
+            <DialogDescription>Talebeleri gruplara atayın.</DialogDescription>
           </DialogHeader>
           <div className="space-y-2">
-            {talebeler.map((t) => (
-              <div
-                key={t.id}
-                className="rounded-md border border-border/60 px-3 py-2"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="min-w-0 truncate text-sm font-medium">{t.isim}</span>
-                  <select
-                    value={t.grup ?? ""}
-                    onChange={(e) => {
-                      const yeni = e.target.value as Grup | "";
-                      void talebeGuncelle(t.id, {
-                        grup: yeni === "" ? undefined : yeni,
-                      });
-                    }}
-                    className="h-9 shrink-0 rounded-md border border-border bg-background px-2 text-xs text-foreground outline-none focus:border-primary"
-                  >
-                    <option value="">Grup yok</option>
-                    {GRUPLAR.map((g) => (
-                      <option key={g.id} value={g.id}>
-                        {g.ad}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="mt-2 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
-                  <label className="flex items-center gap-1.5">
-                    <input
-                      type="checkbox"
-                      checked={!t.aidatHaric}
-                      onChange={(e) =>
+            {talebeler
+              .filter((t) => !t.aidatHaric)
+              .map((t) => (
+                <div
+                  key={t.id}
+                  className="rounded-md border border-border/60 px-3 py-2"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="min-w-0 truncate text-sm font-medium">{t.isim}</span>
+                    <select
+                      value={t.grup ?? ""}
+                      onChange={(e) => {
+                        const yeni = e.target.value as Grup | "";
                         void talebeGuncelle(t.id, {
-                          aidatHaric: !e.target.checked,
-                        })
-                      }
-                    />
-                    Aidat listesinde
-                  </label>
+                          grup: yeni === "" ? undefined : yeni,
+                        });
+                      }}
+                      className="h-9 shrink-0 rounded-md border border-border bg-background px-2 text-xs text-foreground outline-none focus:border-primary"
+                    >
+                      <option value="">Grup yok</option>
+                      {GRUPLAR.map((g) => (
+                        <option key={g.id} value={g.id}>
+                          {g.ad}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-              </div>
-            ))}
-            {talebeler.length === 0 && (
+              ))}
+            {talebeler.filter((t) => !t.aidatHaric).length === 0 && (
               <p className="py-6 text-center text-sm text-muted-foreground">
                 Henüz talebe yok.
               </p>

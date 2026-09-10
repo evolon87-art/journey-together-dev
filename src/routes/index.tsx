@@ -837,11 +837,14 @@ function Index() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {tr("haftaGun").map((isim, i) => (
-                          <SelectItem key={i} value={String(i)} className="text-sm">
-                            {tr("ders")} · {isim}
-                          </SelectItem>
-                        ))}
+                        {tr("haftaGun")
+                          .map((isim, i) => ({ isim, i }))
+                          .filter(({ i }) => i < 5)
+                          .map(({ isim, i }) => (
+                            <SelectItem key={i} value={String(i)} className="text-sm">
+                              {tr("ders")} · {isim}
+                            </SelectItem>
+                          ))}
                       </SelectContent>
                     </Select>
                   </TableHead>

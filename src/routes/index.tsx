@@ -1211,10 +1211,15 @@ function Index() {
       <DuzenleDiyalog
         talebe={duzenlenen}
         kiraatGizli={duzenleAidattan}
-        onClose={() => setDuzenlenen(null)}
+        sayfaOdakli={duzenleSayfaOdakli}
+        onClose={() => {
+          setDuzenlenen(null);
+          setDuzenleSayfaOdakli(false);
+        }}
         onKaydet={(p) => {
           if (duzenlenen) guncelle(duzenlenen.id, p);
           setDuzenlenen(null);
+          setDuzenleSayfaOdakli(false);
         }}
       />
 

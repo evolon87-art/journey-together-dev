@@ -1660,11 +1660,11 @@ function DuzenleDiyalog({
 
   useEffect(() => {
     if (talebe && sayfaOdakli && sayfaInputRef.current) {
-      // Kalem ikonundan açıldığında sayfa alanına odaklan
+      // Radix Dialog'un kendi odağını tamamlaması için kısa gecikme
       const id = window.setTimeout(() => {
         sayfaInputRef.current?.focus();
         sayfaInputRef.current?.select();
-      }, 50);
+      }, 180);
       return () => window.clearTimeout(id);
     }
   }, [talebe, sayfaOdakli]);

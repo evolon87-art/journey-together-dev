@@ -1453,7 +1453,7 @@ function ProfilDiyalog({
 
         <DialogFooter className="gap-2 sm:gap-2">
           <Button variant="ghost" onClick={onClose}>
-            {t("kapat")}
+            {t("iptal")}
           </Button>
           {hocaModu && (
             <>

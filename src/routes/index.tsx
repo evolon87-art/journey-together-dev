@@ -815,12 +815,12 @@ function Index() {
         <Card className="overflow-hidden">
             <Table className="table-fixed">
               <colgroup>
-                <col className="w-[7%]" />
-                <col className={hocaModu ? "w-[31%]" : "w-[38%]"} />
-                <col className={hocaModu ? "w-[21%]" : "w-[25%]"} />
-                <col className="w-[12%]" />
-                <col className="w-[11%]" />
-                {hocaModu && <col className="w-[18%]" />}
+                <col className="w-[6%]" />
+                <col className={hocaModu ? "w-[42%]" : "w-[46%]"} />
+                <col className={hocaModu ? "w-[18%]" : "w-[20%]"} />
+                <col className="w-[8%]" />
+                <col className="w-[8%]" />
+                {hocaModu && <col className="w-[8%]" />}
               </colgroup>
               <TableHeader>
                 <TableRow className="bg-muted/40">

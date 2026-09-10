@@ -315,7 +315,9 @@ const GUN_UZUN = [
 ] as const;
 
 function bugununGunu(): number {
-  return (new Date().getDay() + 6) % 7; // Pzt=0
+  const gun = (new Date().getDay() + 6) % 7; // Pzt=0
+  // Cumartesi (5) ve Pazar (6) ders günü değildir; Pazartesi'ye döndür.
+  return gun >= 5 ? 0 : gun;
 }
 
 function getKiraatGunler(t: Talebe, haftaBas: number): number[] {

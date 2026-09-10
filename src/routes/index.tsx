@@ -1766,6 +1766,7 @@ function DuzenleDiyalog({
                 <BookOpen className="h-3.5 w-3.5" /> {t("sayfaAralik")}
               </Label>
               <Input
+                ref={sayfaInputRef}
                 type="number"
                 inputMode="numeric"
                 min={1}
